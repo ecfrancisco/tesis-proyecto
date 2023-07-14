@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/admin/css/login.css' %}">
+
+{% endblock %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@500;600;800&display=swap"
+        rel="stylesheet">
+</head>
+<script src="https://unpkg.com/feather-icons"></script>
+
+<body>
+    <div class="contain">
+        <!-- <button class="btn">
+            <i data-feather="arrow-left-circle"></i> Back Home
+        </button> -->
+
+        <div class="login">
+            <form action="">
+                <h1>Bienvenido</h1>
+                <small>Inicie sesión en su cuenta y conectese con los departamentos.</small>
+                <label for="email">Correo</label>
+                <input placeholder="Ingresar Email" type="text" name="" id="">
+                <label for="pass">Contraseña</label>
+                <input placeholder="Ingresar Contraseña" type="password" name="" id="">
+                <div class="mor">
+                    <a href="">Olvido su contraseña?</a>
+                </div>
+                <input class="log" type="submit" name="" value="Ingresar" id="">
+
+                <div class="container">
+                    <div class="line"></div>
+                    <p>Or</p>
+                    <div class="line"></div>
+                </div>
+
+                <div class="op">
+                    <button>
+                        <img src="https://companieslogo.com/img/orig/GOOG-0ed88f7c.png?t=1633218227" alt="Google Logo"
+                            class="Google-logo">
+                        Login with Google
+                    </button>
+                    <button>
+                        <img src="https://seeklogo.com/images/A/apple-logo-5933E519F8-seeklogo.com.png" alt="Apple Logo"
+                            class="Apple-logo">
+                        Login with Apple
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="image">
+            <h1>New here? Sign up and unlock amazing features!</h1>
+            <button class="sign">Sign Up</button>
+        </div>
+
+    </div>
+
+    <!-- <script>
+        feather.replace()
+    </script> -->
+</body>
+
+</html>
