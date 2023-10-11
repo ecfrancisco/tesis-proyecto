@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_end %}
+{{ block.super }}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/plugins/admin/css/servicios.css">
+{% endblock %}
+
+
+{% endblock head_end %}
+
+{% block body_start %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block body_content %}
+
+<!-- ################################# FRONT-END ######################################### -->
+
+
+<div class="col-sm-12" id="image-logo">
+    <img src="/static/img/Logo-Alcaldia-2023.png" alt="" style="height: 4rem">
+    <img src="/static/img/servicios.png" alt="" style="height: 4rem">
+</div>
+
+<div class="principal">
+    <div class="servicios">
+        <div class="card">
+            <img src="/static/img/Deportes.png" alt="">
+
+            <div class="info">
+                <h1>Deportes</h1>
+                <p>Cursos vacacionales de fútbol y baloncesto, además de colaborar con la escuela de fútbol del
+                    municipio.
+                </p>
+                <a href="/servicios/response/" class="btn">Inscribirse</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="/static/img/Infocentro.jpg" alt="">
+            <div class="info">
+                <h1>Infocentro</h1>
+                <p>Cursos de ofimática y acceso a computadoras para trabajos y actividades educativas.</p>
+                <a href="#" class="btn">Inscribirse</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="/static/img/Salud.jpg" alt="">
+            <div class="info">
+                <h1>Centro de Salud</h1>
+                <p>Terapia física y terapia de lenguaje para mejorar la salud y la comunicación de nuestros pacientes.
+                </p>
+                <a href="#" class="btn">Inscribirse</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="footer" style="display: flex; font-family: 'Lato', sans-serif;">
+    <div style="background-color: #fff;">
+        <img src="/static/img/Logo-Pedro-Orellana.png" alt="">
+        <br>
+        <br>
+        <br>
+    </div>
+
+    <div class="contacto" style="padding-left: 4rem;">
+        <span style="color: #40723a;"><strong> CONTACTO </strong></span>
+        <br>
+        <br>
+
+        <span style="color: #40723a;"><strong> Dirección: </strong></span>
+        <br>
+        <span>Cdla. Casco Colonial. Av. Principal - Acapulco </span>
+        <br>
+        <br>
+
+        <span style="color: #40723a;"><strong> Horario de trabajo: </strong></span>
+        <br>
+        <span> Lun - Vie: 8AM - 5PM </span>
+        <br>
+        <br>
+
+        <span style="color: #40723a;"><strong> Teléfono: </strong></span>
+        <br>
+        <span>(+593) 42729-321 / 322 / 323</span>
+    </div>
+</div>
+
+
+
+{% block content %}
+
+{% endblock content %}
+
+{% endblock %}
+
+{% block body_end %}
+
+{% endblock body_end %}

@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <link rel="shortcut icon" href="/static/img/Logo-Alcaldia-2023.png">
+    <title>{% block title %}GAD – Municipal Marcelino Maridueña{% endblock %}</title>
+    <!-- ag-grid -->
+
+    <!-- jQuery 3.6.1(necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script type="text/javascript" language="javascript"
+        src="/static/plugins/bootstrap-5.2.2-dist/js/jquery-3.6.1.min.js"></script> -->
+
+    <!-- Bootstrap 5.2.2 -->
+    <script src="{% static 'plugins/bootstrap-5.2.2-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" language="javascript"
+        src="/static/plugins/bootstrap-5.2.2-dist/respond-1.4.2.min.js"></script>
+
+
+    <!-- Fonts Google -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@500;600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Select2 4.1.0-->
+    <!-- <script type="text/javascript" language="javascript" src="/static/plugins/javascripts/select2.min.js"></script> -->
+
+
+    <!-- DateTimePicker Tempus Dominus -->
+
+
+    {% block head_start %}
+
+    {% endblock head_start %}
+
+
+    {% block head_end %}
+
+
+    {% endblock head_end %}
+</head>
+<!-- <script src="https://unpkg.com/feather-icons"></script> -->
+
+<body>
+    <!-- <script type="text/javascript" language="javascript" src="/static/plugins/javascripts/basic.js"></script> -->
+    {% block body_start %}
+
+    <!-- <script type="text/javascript" language="javascript" src="/static/plugins/Highcharts/highcharts.js"></script> -->
+
+    <!-- fullcalendar 3.9.0 -->
+    {% endblock body_start %}
+    {% block body_content %}
+
+    {% endblock body_content %}
+
+
+    {% block body_end %}
+
+
+    {% endblock body_end %}
+</body>
+
+</html>

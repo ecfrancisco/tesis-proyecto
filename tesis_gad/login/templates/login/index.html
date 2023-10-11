@@ -1,40 +1,43 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+<!-- {% load static %} -->
 
-<link rel="stylesheet" type="text/css" href="../static/plugins/admin/css/login.css">
+{% block head_end %}
+{{ block.super }}
+<!-- <script src="/static/plugins/javascripts/all.js"></script> -->
 
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@500;600;800&display=swap"
-        rel="stylesheet">
-</head>
-<script src="https://unpkg.com/feather-icons"></script>
+{% block css %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'plugins/bootstrap-5.2.2-dist/css/bootstrap.min.css' %}"> -->
+<link rel="stylesheet" type="text/css" href="/static/plugins/admin/css/login.css">
+{% endblock %}
 
-<body>
-    <div class="contain">
-        <!-- <button class="btn">
-            <i data-feather="arrow-left-circle"></i> Back Home
-        </button> -->
 
-        <div class="login">
-            <form action="">
-                <h1>Bienvenido</h1>
-                <small>Inicie sesión en su cuenta y conectese con los departamentos.</small>
-                <label for="email">Correo</label>
-                <input placeholder="Ingresar Email" type="text" name="" id="">
-                <label for="pass">Contraseña</label>
-                <input placeholder="Ingresar Contraseña" type="password" name="" id="">
-                <div class="mor">
-                    <a href="">Olvido su contraseña?</a>
-                </div>
-                <input class="log" type="submit" name="" value="Ingresar" id="">
+{% endblock head_end %}
 
-                <!-- <div class="container">
+{% block body_start %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block body_content %}
+
+<!-- ################################# FRONT-END ######################################### -->
+
+<div class="contain">
+    <div class="login">
+        <form action="">
+            <h1>Bienvenido</h1>
+            <small>Inicie sesión en su cuenta y conectese con los departamentos.</small>
+            <label for="email">Correo</label>
+            <input placeholder="Ingresar Email" type="text" name="" id="">
+            <label for="pass">Contraseña</label>
+            <input placeholder="Ingresar Contraseña" type="password" name="" id="">
+            <div class="mor">
+                <a href="">Olvido su contraseña?</a>
+            </div>
+            <input class="log" type="submit" name="" value="Ingresar" id="">
+
+            <!-- <div class="container">
                     <div class="line"></div>
                     <p>O</p>
                     <div class="line"></div>
@@ -52,19 +55,22 @@
                         Usar Apple
                     </button>
                 </div> -->
-            </form>
-        </div>
-
-        <div class="image">
-            <!-- <h1>New here? Sign up and unlock amazing features!</h1>
-            <button class="sign">Sign Up</button> -->
-        </div>
-
+        </form>
     </div>
 
-    <!-- <script>
-        feather.replace()
-    </script> -->
-</body>
+    <div class="image">
+        <!-- <h1>New here? Sign up and unlock amazing features!</h1>
+            <button class="sign">Sign Up</button> -->
+    </div>
 
-</html>
+</div>
+
+{% block content %}
+
+{% endblock content %}
+
+{% endblock %}
+
+{% block body_end %}
+
+{% endblock body_end %}
