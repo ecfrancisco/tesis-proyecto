@@ -1,0 +1,16 @@
+.day.new {
+  color: gray !important;
+}
+
+.day.old {
+  color: gray !important;
+}
+
+.tempus-dominus-widget.dark {
+  color: black !important;
+  background-color: white !important;
+}
+
+.tempus-dominus-widget.dark .date-container-days .dow {
+  color: rgba(0, 0, 0, 0.5) !important;
+}

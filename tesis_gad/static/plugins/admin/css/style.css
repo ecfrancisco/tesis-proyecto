@@ -1,0 +1,57 @@
+body,
+input,
+span,
+label,
+select,
+button {
+  font-size: 0.8rem !important;
+}
+
+.ag-header-cell-label {
+  justify-content: center;
+}
+
+.ag-header-group-cell-label {
+  justify-content: center;
+}
+
+
+.rag-red {
+  background-color: lightcoral;
+}
+
+.rose {
+
+  color: hsla(6, 55%, 51%, 1)
+}
+
+.green {
+
+  color: hsla(87, 53%, 35%, 1)
+}
+
+.yellow {
+  color: hsla(46, 93%, 40%, 1)
+}
+
+.rag-amber {
+  background-color: hsl(6.3, 55.7%, 80%);
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e85d04;
+}
+
+.rag-green {
+  background-color: hsl(87, 53%, 75%);
+
+
+}
+
+.rag-yellow {
+
+  background-color: hsla(46, 93%, 77%, 1);
+}
+
+#datos_proyectados{
+  color: hsl(87, 53%, 75%) !important;
+}

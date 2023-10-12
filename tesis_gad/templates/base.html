@@ -9,8 +9,8 @@
     <!-- ag-grid -->
 
     <!-- jQuery 3.6.1(necessary for Bootstrap's JavaScript plugins) -->
-    <!-- <script type="text/javascript" language="javascript"
-        src="/static/plugins/bootstrap-5.2.2-dist/js/jquery-3.6.1.min.js"></script> -->
+    <script type="text/javascript" language="javascript"
+        src="/static/plugins/bootstrap-5.2.2-dist/js/jquery-3.6.1.min.js"></script>
 
     <!-- Bootstrap 5.2.2 -->
     <script src="{% static 'plugins/bootstrap-5.2.2-dist/js/bootstrap.min.js' %}"></script>
@@ -31,6 +31,11 @@
 
 
     <!-- DateTimePicker Tempus Dominus -->
+    <script src="/static/plugins/admin/js/popper.min.js"></script>
+    <script src="/static/plugins/admin/js/solid.min.js"></script>
+    <script src="/static/plugins/admin/js/fontawesome.min.js"></script>
+    <script src="/static/plugins/Tempus-Dominus/tempus-dominus.js"></script>
+    <script src="/static/plugins/admin/js/jQuery-provider.js"></script>
 
 
     {% block head_start %}
@@ -46,7 +51,8 @@
 <!-- <script src="https://unpkg.com/feather-icons"></script> -->
 
 <body>
-    <!-- <script type="text/javascript" language="javascript" src="/static/plugins/javascripts/basic.js"></script> -->
+    <script type="text/javascript" language="javascript"
+        src="/static/plugins/daterangepicker-3.0.5/moment.min.js"></script>
     {% block body_start %}
 
     <!-- <script type="text/javascript" language="javascript" src="/static/plugins/Highcharts/highcharts.js"></script> -->
