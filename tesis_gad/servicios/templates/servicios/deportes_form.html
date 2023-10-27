@@ -59,11 +59,30 @@
 </nav>
 
 <div class="principal">
-    <br>
-    <br>
+    <br><br><br>
     <div class="container">
         <div class="container-fluid">
             <form novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="zona_rural" class="form-label">Zona de su Elección</label>
+                        <div class="input-group" style="padding-top: 0.4rem;">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="option1" checked>
+                                <label class="form-check-label" for="inlineRadio1">Urbana</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                    value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Rural</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
                 <div class="row">
                     <div class="col-md-3">
                         <label for="validationCustom01" class="form-label">Primer nombre</label>
@@ -97,14 +116,16 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="validationCustom03" class="form-label">Ciudad</label>
-                        <input type="text" class="form-control" id="validationCustom03" required>
+                        <label for="validationCustom03" class="form-label">Cantón</label>
+                        <select class="form-select" id="cantones" required>
+                            <option selected>Selecciona un cantón o ciudad</option>
+                        </select>
                         <div class="invalid-feedback">
-                            Proporcione una ciudad válida.
+                            Por favor, selecciona un cantón válido.
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="datetimepicker1Input" class="form-label" style="font-weight: 500;">Fecha de
                             nacimiento
                         </label>
@@ -123,28 +144,57 @@
                 <br>
 
                 <div class="row">
+                    <div class="col-md-6">
+                        <label for="nombre_representante" class="form-label">Nombre del Representante</label>
+                        <input type="text" class="form-control" id="nombre_representante"
+                            placeholder="Ingrese nombre completo del representante" required>
+                        <div class="valid-feedback">
+                            Perfecto!
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="telefono" class="form-label">Celular</label>
+                        <div class="input-group">
+                            <span class="input-group-text">+593</span>
+                            <input type="text" id="telefono" class="form-control" required>
+                        </div>
+                        <div class="invalid-feedback">
+                            Por favor, proporciona un número de celular válido (Ejemplo: +593 987654321).
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <br>
+
+                <div class="row">
                     <div class="col-12">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button id="btn_consultar" name="btn_consultar" type="submit" class="btn btn-primary">
                                 <img src="/static/plugins/icons8/icons8-enviar-48.png" alt="Bootstrap" width="20"
-                                    height="20"> Enviar </button>
+                                    height="20">
+                                Enviar </button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <br><br><br><br>
+</div>
 </div>
 
 <script type="text/javascript" charset="utf-8">
-    var fechaActual = new Date(); // Obtener la fecha actual
-    fechaActual.setDate(fechaActual.getDate() - 1); // Restar un día
+    var fechaMinima = new Date();
+    fechaMinima.setFullYear(fechaMinima.getFullYear() - 4);
 
-    var fecha_actual = moment(fechaActual, 'YYYY-MM-DD').toDate();
+    var fecha_min = moment(fechaMinima, 'YYYY-MM-DD').toDate();
 
     const picker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
         restrictions: {
-            maxDate: fechaActual
+            maxDate: fecha_min
         },
         display: {
             components: {
@@ -158,12 +208,35 @@
         }
     });
     picker1.dates.formatInput = date => moment(date).format('YYYY-MM-DD')
-    picker1.dates.setValue(tempusDominus.DateTime.convert(fecha_actual));
+    picker1.dates.setValue(tempusDominus.DateTime.convert(fecha_min));
 
     datetimepicker1.addEventListener(tempusDominus.Namespace.events.change, (e) => {
         fecha3 = document.getElementById("datetimepicker1").value;
-        // $('#fecha3').val(fecha3);
     });
+</script>
+
+<script type="text/javascript" charset="utf-8">
+    // Función que me da los cantones y ciudades al select
+    // Obtén el elemento select
+    const selectCantones = document.getElementById('cantones');
+
+    // Carga los datos desde el archivo JSON
+    fetch('/static/plugins/admin/json/provincias.json')
+        .then(response => response.json())
+        .then(data => {
+            // Rellena el select con los cantones de la provincia de Guayas
+            const guayas = data['9']; // El código '9' corresponde a la provincia de Guayas
+            if (guayas && guayas.cantones) {
+                for (const cantonId in guayas.cantones) {
+                    const canton = guayas.cantones[cantonId];
+                    const option = document.createElement('option');
+                    option.value = canton.canton;
+                    option.text = canton.canton;
+                    selectCantones.appendChild(option);
+                }
+            }
+        })
+        .catch(error => console.error('Error al cargar los datos: ' + error));
 </script>
 
 <!-- <div id="image-logo">
