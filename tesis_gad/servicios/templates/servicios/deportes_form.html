@@ -64,20 +64,56 @@
         <div class="container-fluid">
             <form novalidate>
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="zona_rural" class="form-label">Zona de su Elección</label>
+                    <div class="col-md-3">
+                        <label for="zona_eleccion" class="form-label" title="Zona donde tomara el curso">Zona de su
+                            Elección:</label>
                         <div class="input-group" style="padding-top: 0.4rem;">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="option1" checked>
-                                <label class="form-check-label" for="inlineRadio1">Urbana</label>
+                                <input class="form-check-input" type="radio" name="zona_eleccion" id="zona_urbana"
+                                    value="urbana" checked>
+                                <label class="form-check-label" for="zona_urbana">Urbana</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="option2">
-                                <label class="form-check-label" for="inlineRadio2">Rural</label>
+                                <input class="form-check-input" type="radio" name="zona_eleccion" id="zona_rural"
+                                    value="rural">
+                                <label class="form-check-label" for="zona_rural">Rural</label>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="horario_label" class="form-label" title=" donde tomara el curso">Franja
+                            horaria:</label>
+                        <div class="input-group" style="padding-top: 0.4rem;">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="horario" id="matutino"
+                                    value="matutino" checked>
+                                <label class="form-check-label" for="matutino">Matutino</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="horario" id="vespertino"
+                                    value="vespertino">
+                                <label class="form-check-label" for="vespertino">Vespertino</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="curso" class="form-label">Curso:</label>
+                        <select class="form-select" id="genero" name="curso">
+                            <option selected>Elija un curso</option>
+                            <option value="futbol">Fútbol</option>
+                            <option value="basquet">Básquet</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="genero" class="form-label">Género:</label>
+                        <select class="form-select" id="genero" name="genero">
+                            <option selected>Elija un género</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                        </select>
                     </div>
                 </div>
 
@@ -184,17 +220,21 @@
     </div>
     <br><br><br><br>
 </div>
-</div>
 
 <script type="text/javascript" charset="utf-8">
     var fechaMinima = new Date();
     fechaMinima.setFullYear(fechaMinima.getFullYear() - 4);
 
+    var fechaMaxima = new Date();
+    fechaMaxima.setFullYear(fechaMinima.getFullYear() - 14);
+
     var fecha_min = moment(fechaMinima, 'YYYY-MM-DD').toDate();
+    var fecha_max = moment(fechaMaxima, 'YYYY-MM-DD').toDate();
 
     const picker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
         restrictions: {
-            maxDate: fecha_min
+            maxDate: fecha_min,
+            minDate: fecha_max
         },
         display: {
             components: {
@@ -238,83 +278,6 @@
         })
         .catch(error => console.error('Error al cargar los datos: ' + error));
 </script>
-
-<!-- <div id="image-logo">
-    <img src="/static/img/Logo-Alcaldia-2023.png" alt="" style="height: 4rem">
-    <img src="/static/img/servicios.png" alt="" style="height: 4rem">
-</div>
-
-<div class="principal">
-    <div class="servicios">
-        <form>
-            <div class="container">
-                <span for="email"><b>Primer Nombre</b></span>
-                <span style="padding-left: 28.5rem;" for="email"><b>Segundo Nombre</b></span>
-
-                <br>
-
-                <div style="display: flex;">
-                    <input type="text" name="first_name" placeholder="Ingrese primer nombre" required>
-                    <input type="text" name="second_name" placeholder="Ingrese segundo nombre" required>
-                </div>
-
-                <label for="email"><b>Correo</b></label>
-                <input type="text" placeholder="Ingresar correo" name="email" required>
-
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-
-                <label for="email"><b>Número de teléfono</b></label>
-                <br>
-                <select name="phoneCode" required>
-                    <option selected hidden value="">Code</option>
-                    <option value="66">+98</option>
-                    <option value="66">+99</option>
-                    <option value="66">+90</option>
-                    <option value="66">+66</option>
-                </select>
-                <input type="phone" name="phone" placeholder="812345678" required>
-
-                <div class="clearfix">
-                    <button type="submit" class="btn">Sign Up</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<br>
-
-<div class="footer" style="display: flex; font-family: Montserrat, Arial, Helvetica, sans-serif;">
-    <div style="background-color: #fff;">
-        <img src="/static/img/Logo-Pedro-Orellana.png" alt="">
-        <br>
-        <br>
-        <br>
-    </div>
-
-    <div class="contacto" style="padding-left: 4rem;">
-        <span style="color: #40723a;"><strong> CONTACTO </strong></span>
-        <br>
-        <br>
-
-        <span style="color: #40723a;"><strong> Dirección: </strong></span>
-        <br>
-        <span>Cdla. Casco Colonial. Av. Principal - Acapulco </span>
-        <br>
-        <br>
-
-        <span style="color: #40723a;"><strong> Horario de trabajo: </strong></span>
-        <br>
-        <span> Lun - Vie: 8AM - 5PM </span>
-        <br>
-        <br>
-
-        <span style="color: #40723a;"><strong> Teléfono: </strong></span>
-        <br>
-        <span>(+593) 42729-321 / 322 / 323</span>
-    </div>
-</div> -->
 
 
 {% block content %}
