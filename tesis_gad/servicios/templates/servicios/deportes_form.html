@@ -105,6 +105,7 @@
                             <option value="futbol">Fútbol</option>
                             <option value="basquet">Básquet</option>
                         </select>
+                        <input id="flt_curso_list" name="flt_curso_list" value="" type="hidden">
                     </div>
 
                     <div class="col-md-3">
@@ -114,6 +115,7 @@
                             <option value="masculino">Masculino</option>
                             <option value="femenino">Femenino</option>
                         </select>
+                        <input id="flt_genero_list" name="flt_genero_list" value="" type="hidden">
                     </div>
                 </div>
 
@@ -156,6 +158,7 @@
                         <select class="form-select" id="flt_canton" required>
                             <option selected>Selecciona un cantón o ciudad</option>
                         </select>
+                        <input id="flt_canton_list" name="flt_canton_list" value="" type="hidden">
                         <div class="invalid-feedback">
                             Por favor, selecciona un cantón válido.
                         </div>
@@ -256,7 +259,7 @@
 <script type="text/javascript" charset="utf-8">
     // Función que me da los cantones y ciudades al select
     // Obtén el elemento select
-    const selectCantones = document.getElementById('cantones');
+    const selectCantones = document.getElementById('flt_canton');
 
     // Carga los datos desde el archivo JSON
     fetch('/static/plugins/admin/json/provincias.json')
@@ -278,26 +281,55 @@
 </script>
 
 <script type="text/javascript" charset="utf-8">
-    telefonoInput.addEventListener('keydown', function (event) {
-        if (event.key === 'Backspace' && telefonoInput.value.length > 3) {
-            // Permite eliminar números antes del guion
-            var valor = telefonoInput.value;
-            valor = valor.slice(0, 3) + valor.slice(4);
-            telefonoInput.value = valor;
-            event.preventDefault();
+    // Obtén el elemento de entrada
+    const input = document.getElementById("flt_telefono");
+
+    // Escucha el evento "input" para validar y formatear el número
+    input.addEventListener("input", function () {
+        let value = input.value;
+
+        // Elimina caracteres no numéricos
+        value = value.replace(/\D/g, '');
+
+        // Aplica el formato 9xx-xxxxxx si hay más de 3 caracteres
+        if (value.length > 3) {
+            value = value.substring(0, 3) + '-' + value.substring(3, 9);
+        } else if (value.length <= 3 && value.includes('-')) {
+            // Si hay un guion pero no hay más de 3 caracteres, elimina el guion
+            value = value.replace('-', '');
         }
+
+        // Actualiza el valor en el campo de entrada
+        input.value = value;
     });
 
-    // Agregar validación personalizada al enviar el formulario
-    var form = document.querySelector('form');
-    form.addEventListener('submit', function (event) {
-        var valor = telefonoInput.value;
+    $(document).ready(function () {
+        $('#flt_curso').change(function () {
+            var elegidos = [];
+            $(this).find(':selected').each(function (i, item) {
+                elegidos[i] = $(item).val();
+            });
+            // console.log('lmqa -flt_curso elegidos..' + elegidos);
+            $('#flt_curso_list').val(elegidos);
+        });
 
-        // Verificar que el valor tenga el formato correcto
-        if (!/^\d{3}-\d{6}$/.test(valor)) {
-            telefonoInput.setCustomValidity('El formato debe ser 9xx-xxxxxx');
-            event.preventDefault();
-        }
+        $('#flt_genero').change(function () {
+            var elegidos = [];
+            $(this).find(':selected').each(function (i, item) {
+                elegidos[i] = $(item).val();
+            });
+            // console.log('lmqa -flt_genero elegidos..' + elegidos);
+            $('#flt_genero_list').val(elegidos);
+        });
+
+        $('#flt_canton').change(function () {
+            var elegidos = [];
+            $(this).find(':selected').each(function (i, item) {
+                elegidos[i] = $(item).val();
+            });
+            // console.log('lmqa -flt_canton elegidos..' + elegidos);
+            $('#flt_canton_list').val(elegidos);
+        });
     });
 </script>
 
