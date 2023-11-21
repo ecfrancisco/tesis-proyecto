@@ -43,12 +43,34 @@
 
 <!-- ################################# FRONT-END ######################################### -->
 
+<!-- Modal para confirmar datos -->
+<div class="modal fade" id="confirmacionModal" tabindex="-1" aria-labelledby="confirmacionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmacionModalLabel">Confirmación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="datosIngresados"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <img src="/static/img/Logo-Alcaldia-2023.png" alt="" style="height: 4rem">
+                    <a href="/servicios/index/">
+                        <img src="/static/img/Logo-Alcaldia-2023.png" alt="" style="height: 4rem">
+                    </a>
                 </li>
                 <li class="nav-item">
                     <img src="/static/img/servicios.png" alt="" style="height: 4rem">
@@ -62,7 +84,8 @@
     <br><br><br>
     <div class="container">
         <div class="container-fluid">
-            <form novalidate>
+            <form id="myForm" method="POST" action="{% url 'registrar_deportes' %}">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-md-3">
                         <label for="zona_eleccion" class="form-label" title="Zona donde tomará el curso">Zona de su
@@ -124,29 +147,20 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label for="flt_nombre_1" class="form-label">Primer nombre</label>
-                        <input type="text" class="form-control" id="flt_nombre_1" placeholder="Ingrese primer nombre"
-                            required>
-                        <div class="valid-feedback">
-                            Perfecto!
-                        </div>
+                        <input type="text" class="form-control" id="flt_nombre_1" name="flt_nombre_1"
+                            placeholder="Ingrese primer nombre" required>
                     </div>
 
                     <div class="col-md-3">
                         <label for="flt_nombre_2" class="form-label">Segundo nombre</label>
-                        <input type="text" class="form-control" id="flt_nombre_2" placeholder="Ingrese segundo nombre"
-                            required>
-                        <div class="valid-feedback">
-                            Perfecto!
-                        </div>
+                        <input type="text" class="form-control" id="flt_nombre_2" name="flt_nombre_2"
+                            placeholder="Ingrese segundo nombre" required>
                     </div>
 
                     <div class="col-md-6">
                         <label for="flt_apellidos" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="flt_apellidos"
+                        <input type="text" class="form-control" id="flt_apellidos" name="flt_apellidos"
                             placeholder="Ingrese sus dos apellidos" required>
-                        <div class="valid-feedback">
-                            Perfecto!
-                        </div>
                     </div>
                 </div>
 
@@ -159,9 +173,6 @@
                             <option selected>Selecciona un cantón o ciudad</option>
                         </select>
                         <input id="flt_canton_list" name="flt_canton_list" value="" type="hidden">
-                        <div class="invalid-feedback">
-                            Por favor, selecciona un cantón válido.
-                        </div>
                     </div>
 
                     <div class="col-md-4">
@@ -186,20 +197,16 @@
                     <div class="col-md-6">
                         <label for="flt_nombre_representante" class="form-label">Nombre del Representante</label>
                         <input type="text" class="form-control" id="flt_nombre_representante"
-                            placeholder="Ingrese nombre completo del representante" required>
-                        <div class="valid-feedback">
-                            Perfecto!
-                        </div>
+                            name="flt_nombre_representante" placeholder="Ingrese nombre completo del representante"
+                            required>
                     </div>
 
                     <div class="col-md-3">
                         <label for="flt_telefono" class="form-label">Celular</label>
                         <div class="input-group">
                             <span class="input-group-text">+593</span>
-                            <input type="text" id="flt_telefono" class="form-control" placeholder="9xx-xxxxxx" required>
-                        </div>
-                        <div class="invalid-feedback">
-                            Por favor, proporciona un número de celular válido (Ejemplo: +593 987654321).
+                            <input type="text" id="flt_telefono" name="flt_telefono" class="form-control"
+                                placeholder="9xx-xxxxxx" required>
                         </div>
                     </div>
                 </div>
@@ -209,13 +216,19 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-primary">
+                            <button id="revisarDatosBtn" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#confirmacionModal">
+                                Revisar Datos
+                            </button>
+                            <!-- <button type="submit" class="btn btn-primary">
                                 <img src="/static/plugins/icons8/icons8-enviar-48.png" alt="Bootstrap" width="20"
                                     height="20">
-                                Enviar </button>
+                                Enviar </button> -->
                         </div>
                     </div>
                 </div>
+
+                <input id="fecha" name="fecha" value="" type="hidden">
             </form>
         </div>
     </div>
@@ -251,8 +264,9 @@
     picker1.dates.formatInput = date => moment(date).format('YYYY-MM-DD')
     picker1.dates.setValue(tempusDominus.DateTime.convert(fecha_min));
 
-    datetimepicker1.addEventListener(tempusDominus.Namespace.events.change, (e) => {
-        fecha3 = document.getElementById("datetimepicker1").value;
+    datetimepicker1Input.addEventListener(tempusDominus.Namespace.events.change, (e) => {
+        fecha1 = document.getElementById("datetimepicker1Input").value;
+        $('#fecha').val(fecha1);
     });
 </script>
 
@@ -260,6 +274,48 @@
     // Función que me da los cantones y ciudades al select
     // Obtén el elemento select
     const selectCantones = document.getElementById('flt_canton');
+    const data = JSON.parse('{{ data|escapejs }}');
+
+    console.log(data)
+
+    data.data.forEach(objeto => {
+        // Hacer algo con 'objeto'
+        // console.log(objeto);
+
+        // Obtener datos generales
+        const spaces = objeto.spaces;
+        const startDate = objeto.startDate;
+        const endDate = objeto.endDate;
+
+        // console.log("Espacios:", spaces);
+        // console.log("Fecha de inicio:", new Date(startDate));
+        // console.log("Fecha de fin:", new Date(endDate));
+
+        // Obtener datos de los horarios
+        const schedules = objeto.schedules || [];
+        schedules.forEach(schedule => {
+            const startTime = schedule.startTime;
+            const endTime = schedule.endTime;
+            const day = schedule.day;
+            // console.log(`Horario (${day}): Inicio - ${new Date(startTime)}, Fin - ${new Date(endTime)}`);
+        });
+
+        // Obtener el nombre del profesor
+        const teacherFullName = objeto._teacher.fullName;
+        // console.log("Nombre del profesor:", teacherFullName);
+
+        course_name = objeto.name
+        // console.log("Nombre del curso:", course_name)
+
+        // Obtener datos según el nombre
+        const nameToSearch = "Escuela de fufbol sub 10-14";
+        if (course_name.trim() === nameToSearch.trim()) {
+            console.log(`Datos para ${nameToSearch}:`);
+            console.log("Espacios:", spaces);
+            console.log("Fecha de inicio:", new Date(startDate));
+            console.log("Fecha de fin:", new Date(endDate));
+        }
+    });
 
     // Carga los datos desde el archivo JSON
     fetch('/static/plugins/admin/json/provincias.json')
@@ -278,6 +334,96 @@
             }
         })
         .catch(error => console.error('Error al cargar los datos: ' + error));
+
+    // async function obtenerDatos() {
+    //     try {
+    //         const response = await fetch("http://sistema-munipal.lat/api/course");
+    //         const data = await response.json();
+
+    //         console.log(data);
+
+    //         // Obtener datos generales
+    //         const spaces = data.spaces;
+    //         const startDate = data.startDate;
+    //         const endDate = data.endDate;
+
+    //         console.log("Espacios:", spaces);
+    //         console.log("Fecha de inicio:", new Date(startDate));
+    //         console.log("Fecha de fin:", new Date(endDate));
+
+    //         // Obtener datos de los horarios
+    //         const schedules = data.schedules || [];
+    //         schedules.forEach(schedule => {
+    //             const startTime = schedule.startTime;
+    //             const endTime = schedule.endTime;
+    //             const day = schedule.day;
+    //             console.log(`Horario (${day}): Inicio - ${new Date(startTime)}, Fin - ${new Date(endTime)}`);
+    //         });
+
+    //         // Obtener el nombre del profesor
+    //         const teacherFullName = data._teacher.fullName;
+    //         console.log("Nombre del profesor:", teacherFullName);
+
+    //         // Obtener datos según el nombre
+    //         const nameToSearch = "Escuela de fufbol sub 10-14";
+    //         if (data.name === nameToSearch) {
+    //             console.log(`Datos para ${nameToSearch}:`);
+    //             console.log("Espacios:", spaces);
+    //             console.log("Fecha de inicio:", new Date(startDate));
+    //             console.log("Fecha de fin:", new Date(endDate));
+    //         }
+    //     } catch (error) {
+    //         console.error("Error al obtener los datos:", error);
+    //     }
+    // }
+
+    // // Llamar a la función para iniciar la solicitud
+    // obtenerDatos();
+
+    function capitalizeFirstLetter(str) {
+        return str.replace(/\b\w/g, function (match) {
+            return match.toUpperCase();
+        });
+    }
+
+    document.getElementById('revisarDatosBtn').addEventListener('click', function () {
+        // Recopila los valores de los campos del formulario
+        var zonaEleccion = capitalizeFirstLetter(document.querySelector('input[name="zona_eleccion"]:checked').value);
+        var horario = capitalizeFirstLetter(document.querySelector('input[name="horario"]:checked').value);
+        var curso = capitalizeFirstLetter(document.getElementById('flt_curso').value);
+        var genero = capitalizeFirstLetter(document.getElementById('flt_genero').value);
+        var nombre1 = capitalizeFirstLetter(document.getElementById('flt_nombre_1').value);
+        var nombre2 = capitalizeFirstLetter(document.getElementById('flt_nombre_2').value);
+        var apellidos = capitalizeFirstLetter(document.getElementById('flt_apellidos').value);
+        var canton = capitalizeFirstLetter(document.getElementById('flt_canton').value);
+        var fechaNacimiento = document.getElementById('datetimepicker1Input').value;
+        var nombreRepresentante = capitalizeFirstLetter(document.getElementById('flt_nombre_representante').value);
+        var telefono = document.getElementById('flt_telefono').value;
+
+        // Muestra los datos en el modal
+        var datosIngresados = document.getElementById('datosIngresados');
+        datosIngresados.innerHTML = `
+            <p><span><strong> Zona de Elección: </strong></span>${zonaEleccion}</p>
+            <p><span><strong> Franja horaria: </strong></span>${horario}</p>
+            <p><span><strong> Curso: </strong></span>${curso}</p>
+            <p><span><strong> Género: </strong></span>${genero}</p>
+            <p><span><strong> Primer nombre: </strong></span>${nombre1}</p>
+            <p><span><strong> Segundo nombre: </strong></span>${nombre2}</p>
+            <p><span><strong> Apellidos: </strong></span>${apellidos}</p>
+            <p><span><strong> Cantón: </strong></span>${canton}</p>
+            <p><span><strong> Fecha de nacimiento: </strong></span>${fechaNacimiento}</p>
+            <p><span><strong> Nombre del Representante: </strong></span>${nombreRepresentante}</p>
+            <p><span><strong> Celular: </strong>+593-</span>${telefono}</p>
+        `;
+    });
+
+    function enviarFormulario() {
+        // Cierra el modal de confirmación
+        $('#confirmacionModal').modal('hide');
+
+        // Envía el formulario
+        document.getElementById('myForm').submit();
+    }
 </script>
 
 <script type="text/javascript" charset="utf-8">
@@ -304,6 +450,9 @@
     });
 
     $(document).ready(function () {
+        fecha1 = document.getElementById("datetimepicker1Input").value.replace(/[/]/g, "-");
+        $('#fecha').val(fecha1);
+
         $('#flt_curso').change(function () {
             var elegidos = [];
             $(this).find(':selected').each(function (i, item) {
