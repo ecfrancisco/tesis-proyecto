@@ -33,7 +33,7 @@
 
     .container {
         padding: 20px;
-        width: 76rem;
+        width: 69rem;
         border: 1px solid #ccc;
         border-radius: 10px;
         background: white;
@@ -146,21 +146,27 @@
 
                 <div class="row">
                     <div class="col-md-3">
+                        <label for="flt_cedula" class="form-label">Cédula</label>
+                        <input type="text" class="form-control" id="flt_cedula" name="flt_cedula"
+                            placeholder="Ingrese su cédula">
+                    </div>
+
+                    <div class="col-md-3">
                         <label for="flt_nombre_1" class="form-label">Primer nombre</label>
                         <input type="text" class="form-control" id="flt_nombre_1" name="flt_nombre_1"
-                            placeholder="Ingrese primer nombre" required>
+                            placeholder="Ingrese primer nombre">
                     </div>
 
                     <div class="col-md-3">
                         <label for="flt_nombre_2" class="form-label">Segundo nombre</label>
                         <input type="text" class="form-control" id="flt_nombre_2" name="flt_nombre_2"
-                            placeholder="Ingrese segundo nombre" required>
+                            placeholder="Ingrese segundo nombre">
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="flt_apellidos" class="form-label">Apellidos</label>
                         <input type="text" class="form-control" id="flt_apellidos" name="flt_apellidos"
-                            placeholder="Ingrese sus dos apellidos" required>
+                            placeholder="Ingrese sus dos apellidos">
                     </div>
                 </div>
 
@@ -169,7 +175,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="flt_canton" class="form-label">Cantón</label>
-                        <select class="form-select" id="flt_canton" required>
+                        <select class="form-select" id="flt_canton">
                             <option selected>Selecciona un cantón o ciudad</option>
                         </select>
                         <input id="flt_canton_list" name="flt_canton_list" value="" type="hidden">
@@ -197,8 +203,7 @@
                     <div class="col-md-6">
                         <label for="flt_nombre_representante" class="form-label">Nombre del Representante</label>
                         <input type="text" class="form-control" id="flt_nombre_representante"
-                            name="flt_nombre_representante" placeholder="Ingrese nombre completo del representante"
-                            required>
+                            name="flt_nombre_representante" placeholder="Ingrese nombre completo del representante">
                     </div>
 
                     <div class="col-md-3">
@@ -206,7 +211,7 @@
                         <div class="input-group">
                             <span class="input-group-text">+593</span>
                             <input type="text" id="flt_telefono" name="flt_telefono" class="form-control"
-                                placeholder="9xx-xxxxxx" required>
+                                placeholder="9xx-xxxxxx">
                         </div>
                     </div>
                 </div>
@@ -229,6 +234,7 @@
                 </div>
 
                 <input id="fecha" name="fecha" value="" type="hidden">
+                <input id="id_course" name="id_course" value="" type="hidden">
             </form>
         </div>
     </div>
@@ -276,46 +282,11 @@
     const selectCantones = document.getElementById('flt_canton');
     const data = JSON.parse('{{ data|escapejs }}');
 
-    console.log(data)
-
-    data.data.forEach(objeto => {
-        // Hacer algo con 'objeto'
-        // console.log(objeto);
-
-        // Obtener datos generales
-        const spaces = objeto.spaces;
-        const startDate = objeto.startDate;
-        const endDate = objeto.endDate;
-
-        // console.log("Espacios:", spaces);
-        // console.log("Fecha de inicio:", new Date(startDate));
-        // console.log("Fecha de fin:", new Date(endDate));
-
-        // Obtener datos de los horarios
-        const schedules = objeto.schedules || [];
-        schedules.forEach(schedule => {
-            const startTime = schedule.startTime;
-            const endTime = schedule.endTime;
-            const day = schedule.day;
-            // console.log(`Horario (${day}): Inicio - ${new Date(startTime)}, Fin - ${new Date(endTime)}`);
+    function capitalizeFirstLetter(str) {
+        return str.replace(/(?:^|\s)\S/g, function (match) {
+            return match.toUpperCase();
         });
-
-        // Obtener el nombre del profesor
-        const teacherFullName = objeto._teacher.fullName;
-        // console.log("Nombre del profesor:", teacherFullName);
-
-        course_name = objeto.name
-        // console.log("Nombre del curso:", course_name)
-
-        // Obtener datos según el nombre
-        const nameToSearch = "Escuela de fufbol sub 10-14";
-        if (course_name.trim() === nameToSearch.trim()) {
-            console.log(`Datos para ${nameToSearch}:`);
-            console.log("Espacios:", spaces);
-            console.log("Fecha de inicio:", new Date(startDate));
-            console.log("Fecha de fin:", new Date(endDate));
-        }
-    });
+    }
 
     // Carga los datos desde el archivo JSON
     fetch('/static/plugins/admin/json/provincias.json')
@@ -327,64 +298,13 @@
                 for (const cantonId in guayas.cantones) {
                     const canton = guayas.cantones[cantonId];
                     const option = document.createElement('option');
-                    option.value = canton.canton;
-                    option.text = canton.canton;
+                    option.value = capitalizeFirstLetter(canton.canton.toLowerCase());
+                    option.text = capitalizeFirstLetter(canton.canton.toLowerCase());
                     selectCantones.appendChild(option);
                 }
             }
         })
         .catch(error => console.error('Error al cargar los datos: ' + error));
-
-    // async function obtenerDatos() {
-    //     try {
-    //         const response = await fetch("http://sistema-munipal.lat/api/course");
-    //         const data = await response.json();
-
-    //         console.log(data);
-
-    //         // Obtener datos generales
-    //         const spaces = data.spaces;
-    //         const startDate = data.startDate;
-    //         const endDate = data.endDate;
-
-    //         console.log("Espacios:", spaces);
-    //         console.log("Fecha de inicio:", new Date(startDate));
-    //         console.log("Fecha de fin:", new Date(endDate));
-
-    //         // Obtener datos de los horarios
-    //         const schedules = data.schedules || [];
-    //         schedules.forEach(schedule => {
-    //             const startTime = schedule.startTime;
-    //             const endTime = schedule.endTime;
-    //             const day = schedule.day;
-    //             console.log(`Horario (${day}): Inicio - ${new Date(startTime)}, Fin - ${new Date(endTime)}`);
-    //         });
-
-    //         // Obtener el nombre del profesor
-    //         const teacherFullName = data._teacher.fullName;
-    //         console.log("Nombre del profesor:", teacherFullName);
-
-    //         // Obtener datos según el nombre
-    //         const nameToSearch = "Escuela de fufbol sub 10-14";
-    //         if (data.name === nameToSearch) {
-    //             console.log(`Datos para ${nameToSearch}:`);
-    //             console.log("Espacios:", spaces);
-    //             console.log("Fecha de inicio:", new Date(startDate));
-    //             console.log("Fecha de fin:", new Date(endDate));
-    //         }
-    //     } catch (error) {
-    //         console.error("Error al obtener los datos:", error);
-    //     }
-    // }
-
-    // // Llamar a la función para iniciar la solicitud
-    // obtenerDatos();
-
-    function capitalizeFirstLetter(str) {
-        return str.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-        });
-    }
 
     document.getElementById('revisarDatosBtn').addEventListener('click', function () {
         // Recopila los valores de los campos del formulario
@@ -395,23 +315,106 @@
         var nombre1 = capitalizeFirstLetter(document.getElementById('flt_nombre_1').value);
         var nombre2 = capitalizeFirstLetter(document.getElementById('flt_nombre_2').value);
         var apellidos = capitalizeFirstLetter(document.getElementById('flt_apellidos').value);
-        var canton = capitalizeFirstLetter(document.getElementById('flt_canton').value);
-        var fechaNacimiento = document.getElementById('datetimepicker1Input').value;
+        var nombreCompleto = `${nombre1} ${nombre2} ${apellidos}`;
+        var canton = document.getElementById('flt_canton').value;
+        var fechaNacimientoStr = document.getElementById('datetimepicker1Input').value;
         var nombreRepresentante = capitalizeFirstLetter(document.getElementById('flt_nombre_representante').value);
         var telefono = document.getElementById('flt_telefono').value;
+        var nameToSearch = '';
+
+        var dias = ''
+
+        var fechaNacimiento = new Date(fechaNacimientoStr);
+
+        var edad = new Date().getFullYear() - fechaNacimiento.getFullYear() -
+            (new Date().getMonth() < fechaNacimiento.getMonth() ||
+                (new Date().getMonth() === fechaNacimiento.getMonth() &&
+                    new Date().getDate() < fechaNacimiento.getDate()));
+
+        data.data.forEach(objeto => {
+            // Hacer algo con 'objeto'
+            const spaces = objeto.spaces;
+            const startDate = objeto.startDate;
+            const endDate = objeto.endDate;
+            const ageMin = objeto.rangeAge.min;
+            const ageMax = objeto.rangeAge.max;
+
+            var startTime = ''
+            var endTime = ''
+            var day = ''
+
+            const schedules = objeto.schedules || [];
+
+            if (horario == 'Matutino') {
+                hora_min = "8:00";
+                hora_max = "12:00";
+
+                // Obtener datos de los horarios
+                schedules.forEach(schedule => {
+                    startTime = schedule.startTime;
+                    endTime = schedule.endTime;
+                    day = schedule.day;
+                    // console.log(`Horario (${day}): Inicio - ${new Date(startTime)}, Fin - ${new Date(endTime)}`);
+                });
+
+                const fechaInicio = new Date(startTime);
+
+                const formatoHora = date => `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+                const horaFormateada = formatoHora(fechaInicio);
+
+                const estaEnRango = parseInt(horaFormateada.substr(0, 2), 10) >= parseInt(hora_min.substr(0, 2), 10) &&
+                    parseInt(horaFormateada.substr(0, 2), 10) <= parseInt(hora_max.substr(0, 2), 10);
+
+                if (estaEnRango) {
+                    if (edad >= Number(ageMin) && edad <= Number(ageMax)) {
+                        nameToSearch = "Futbol " + String(ageMin) + "-" + String(ageMax);
+                    } else if (edad >= Number(ageMin) && edad <= Number(ageMax)) {
+                        nameToSearch = "Futbol " + String(ageMin) + "-" + String(ageMax);
+                    }
+                }
+            } else {
+                hora_min = "13:00";
+                hora_max = "19:00";
+            }
+
+            // Obtener el nombre del profesor
+            const teacherFullName = objeto._teacher.fullName;
+            const idCourse = objeto._id
+
+            course_name = objeto.name
+
+            // Obtener datos según el nombre
+            if (course_name.trim() === nameToSearch.trim()) {
+                schedules.forEach((schedule, index) => {
+                    day = schedule.day;
+                    dias += capitalizeFirstLetter(day);
+
+                    // Agregar coma si no es el último día
+                    if (index < schedules.length - 1) {
+                        dias += ', ';
+                    }
+                });
+
+                console.log(`Datos para ${nameToSearch}:`);
+                console.log("Espacios:", spaces);
+                console.log("Fecha de inicio:", new Date(startDate));
+                console.log("Fecha de fin:", new Date(endDate));
+                console.log(`ID: ${idCourse}`);
+
+                $('#id_course').val(idCourse);
+            }
+        });
 
         // Muestra los datos en el modal
         var datosIngresados = document.getElementById('datosIngresados');
         datosIngresados.innerHTML = `
             <p><span><strong> Zona de Elección: </strong></span>${zonaEleccion}</p>
-            <p><span><strong> Franja horaria: </strong></span>${horario}</p>
+            <p><span><strong> Horarios: </strong></span>${dias}</p>
             <p><span><strong> Curso: </strong></span>${curso}</p>
             <p><span><strong> Género: </strong></span>${genero}</p>
-            <p><span><strong> Primer nombre: </strong></span>${nombre1}</p>
-            <p><span><strong> Segundo nombre: </strong></span>${nombre2}</p>
-            <p><span><strong> Apellidos: </strong></span>${apellidos}</p>
+            <p><span><strong> Nombre: </strong></span>${nombreCompleto}</p>
             <p><span><strong> Cantón: </strong></span>${canton}</p>
-            <p><span><strong> Fecha de nacimiento: </strong></span>${fechaNacimiento}</p>
+            <p><span><strong> Fecha de nacimiento: </strong></span>${fechaNacimientoStr}</p>
             <p><span><strong> Nombre del Representante: </strong></span>${nombreRepresentante}</p>
             <p><span><strong> Celular: </strong>+593-</span>${telefono}</p>
         `;

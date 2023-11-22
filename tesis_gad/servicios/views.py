@@ -5,8 +5,9 @@ from django.conf import settings
 from datetime import datetime
 import json
 import requests
+from unidecode import unidecode
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 
 
 def index(request):
@@ -25,37 +26,6 @@ def responder(request):
 
     if response.status_code == 200:
         data = json.dumps(response.json())
-
-        # for course_data in data.get('data', []):
-        #     # Obtener datos generales
-        #     spaces = course_data.get("spaces")
-        #     startDate = course_data.get("startDate")
-        #     endDate = course_data.get("endDate")
-
-        #     # Obtener datos de los horarios
-        #     schedules = course_data.get("schedules", [])
-        #     for schedule in schedules:
-        #         startTime = schedule.get("startTime")
-        #         endTime = schedule.get("endTime")
-        #         day = schedule.get("day")
-        #         # print(f"Horario: {day}, Inicio: {startTime}, Fin: {endTime}")
-
-        #     # Obtener el nombre del profesor si existe
-        #     teacher_data = course_data.get("_teacher", {})
-        #     teacher_fullName = teacher_data.get("fullName", "")
-        #     # print(f"Nombre del profesor: {teacher_fullName}")
-
-        #     course_name = course_data["name"]
-        #     print(f"Nombre del curso: {course_name}")
-
-        #     # Obtener datos según el nombre
-        #     name_to_search = "Escuela de fufbol sub 10-14"
-        #     if course_name.strip() == name_to_search.strip():
-        #         print("Hola")
-        #         print(f"Datos para {name_to_search}:")
-        #         print(f"Espacios: {spaces}")
-        #         print(f"Fecha de inicio: {startDate}")
-        #         print(f"Fecha de fin: {endDate}")
         contex["data"] = data
     else:
         print(
@@ -69,22 +39,56 @@ def registrar_deportes(request):
         print(request.POST)
         # Accede a los datos del formulario
 
-        horario = request.POST['horario']
-        flt_curso = request.POST['flt_curso']
-        # Otros campos del formulario...
+        zona_eleccion = request.POST['zona_eleccion']
+        fecha_objeto = datetime.strptime(request.POST['fecha'], "%Y-%m-%d")
+        epoch = int(fecha_objeto.timestamp() * 1000)
+        direccion = unidecode(request.POST.get('flt_canton_list', ''))
+        celular = "0" + request.POST['flt_telefono'].replace("-", "")[-9:]
+        cedula = request.POST['flt_cedula']
+        genero = "M" if request.POST['flt_genero_list'] == "masculino" else "F"
+        id_course = request.POST['id_course']
 
         nombre_completo = ' '.join(word.capitalize() for word in (
             request.POST['flt_nombre_1'],
             request.POST['flt_nombre_2'],
             request.POST['flt_apellidos']
         ))
-        zona_eleccion = request.POST['zona_eleccion']
-        fecha_objeto = datetime.strptime(request.POST['fecha'], "%Y-%m-%d")
-        epoch = int(fecha_objeto.timestamp())
-        direccion = request.POST['flt_canton_list'].capitalize()
-        celular = "0" + request.POST['flt_telefono'].replace("-", "")[-9:]
-        cedula = ''
-        genero = "M" if request.POST['femenino'] == "masculino" else "F"
+
+        print(
+            f"Datos: {zona_eleccion}, {genero}, {cedula}, {nombre_completo}, {direccion}, {epoch}, {celular}, {id_course}")
+
+        url = 'http://sistema-munipal.lat/api/inscription'
+
+        # Datos a enviar en el cuerpo de la solicitud
+        data = {
+            "name": nombre_completo,
+            "birdthDate": epoch,
+            "zone": zona_eleccion,
+            "address": direccion,
+            "phone": celular,
+            "cedula": cedula,
+            "sexo": genero,
+            "_course": id_course
+        }
+
+        # Convertir el diccionario a formato JSON
+        json_data = json.dumps(data)
+
+        print(json_data)
+
+        try:
+            # Realizar la solicitud POST
+            response = requests.post(url, json=json_data)
+            response.raise_for_status()  # Lanzar una excepción si la solicitud no es exitosa
+            print(response.status_code)
+            print(response.text)
+
+            # Devolver un mensaje exitoso
+            return response
+        except requests.exceptions.RequestException as e:
+            # Capturar cualquier excepción que ocurra durante la solicitud
+            return HttpResponseServerError(content=json.dumps({'status': 'error', 'message': str(e)}), content_type='application/json')
+        # Imprimir la respuesta
 
         # Resto de la lógica de la vista...
-        return HttpResponse(status=400)
+        # return HttpResponse(status=400)
