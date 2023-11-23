@@ -425,7 +425,28 @@
         $('#confirmacionModal').modal('hide');
 
         // Envía el formulario
-        document.getElementById('myForm').submit();
+        $.ajax({
+            url: '/servicios/registro/',
+            type: 'POST',
+            data: $('#myForm').serialize(),
+            success: function (response) {
+                if (response.status === 'success') {
+                    // Muestra un mensaje de registro exitoso
+                    alert('¡Registro exitoso!');
+
+                    // Redirige a la URL proporcionada en la respuesta después de aceptar la alerta
+                    window.location.href = response.redirect_url || '/servicios/index/';
+                } else {
+                    // Maneja otros casos de respuesta del servidor, si es necesario
+                    alert('¡Registro no exitoso!');
+                }
+            },
+            error: function (error) {
+                // Maneja errores si es necesario
+                alert('¡Registro no exitoso!', error);
+            }
+        });
+
     }
 </script>
 

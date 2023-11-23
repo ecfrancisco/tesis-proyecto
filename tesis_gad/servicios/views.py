@@ -71,24 +71,20 @@ def registrar_deportes(request):
             "_course": id_course
         }
 
-        # Convertir el diccionario a formato JSON
-        json_data = json.dumps(data)
-
-        print(json_data)
-
         try:
             # Realizar la solicitud POST
-            response = requests.post(url, json=json_data)
+            response = requests.post(url, json=data)
             response.raise_for_status()  # Lanzar una excepción si la solicitud no es exitosa
             print(response.status_code)
             print(response.text)
 
             # Devolver un mensaje exitoso
-            return response
+            return HttpResponse(
+                content=json.dumps(
+                    {'status': 'success', 'redirect_url': '/servicios/index/'}),
+                content_type='application/json'
+            )
         except requests.exceptions.RequestException as e:
             # Capturar cualquier excepción que ocurra durante la solicitud
             return HttpResponseServerError(content=json.dumps({'status': 'error', 'message': str(e)}), content_type='application/json')
-        # Imprimir la respuesta
-
-        # Resto de la lógica de la vista...
-        # return HttpResponse(status=400)
+    return None
