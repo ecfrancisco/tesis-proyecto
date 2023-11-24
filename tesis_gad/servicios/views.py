@@ -19,19 +19,27 @@ def index(request):
 
 def responder(request):
     '''Función que maneja las opciones escogidas por el usuario'''
+    servicio_seleccionado = request.GET['servicio']
     contex = {}
 
-    url = "http://sistema-munipal.lat/api/course"
-    response = requests.get(url)
+    if servicio_seleccionado == 'deportes':
+        # Lógica para obtener datos específicos de deportes si es necesario
+        url = "http://sistema-munipal.lat/api/course"
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = json.dumps(response.json())
+            contex["data"] = data
+        else:
+            print(
+                f"Error al obtener los datos. Código de estado: {response.status_code}")
 
-    if response.status_code == 200:
-        data = json.dumps(response.json())
-        contex["data"] = data
-    else:
-        print(
-            f"Error al obtener los datos. Código de estado: {response.status_code}")
+        return render(request, 'servicios/deportes_form.html', contex)
 
-    return render(request, 'servicios/deportes_form.html', contex)
+    elif servicio_seleccionado == 'infocentro':
+        # Lógica para obtener datos específicos de infocentro si es necesario
+        # ...
+
+        return render(request, 'servicios/infocentro_form.html', contex)
 
 
 def registrar_deportes(request):

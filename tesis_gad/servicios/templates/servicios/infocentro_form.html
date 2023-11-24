@@ -63,16 +63,16 @@
     </div>
 </div>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" style="padding: 0.31rem;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="padding-left: 0.31rem;">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a href="/servicios/index/">
                         <img src="/static/img/Logo-Alcaldia-2023.png" alt="" style="height: 4rem">
                     </a>
                 </li>
-                <li class="nav-item" style="padding-left: 0.3rem;">
+                <li class="nav-item">
                     <img src="/static/img/servicios.png" alt="" style="height: 4rem">
                 </li>
             </ul>
@@ -88,8 +88,8 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-3">
-                        <label for="zona_eleccion" class="form-label" title="Zona donde tomará el curso">Zona de su
-                            elección:</label>
+                        <label for="zona_eleccion" class="form-label" title="Zona donde tomará el curso">Zona de
+                            residencia:</label>
                         <div class="input-group" style="padding-top: 0.4rem;">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="zona_eleccion" id="zona_urbana"
@@ -100,23 +100,6 @@
                                 <input class="form-check-input" type="radio" name="zona_eleccion" id="zona_rural"
                                     value="rural">
                                 <label class="form-check-label" for="zona_rural">Rural</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="horario_label" class="form-label">Franja
-                            horaria:</label>
-                        <div class="input-group" style="padding-top: 0.4rem;">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="horario" id="matutino"
-                                    value="matutino" checked>
-                                <label class="form-check-label" for="matutino">Matutino</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="horario" id="vespertino"
-                                    value="vespertino">
-                                <label class="form-check-label" for="vespertino">Vespertino</label>
                             </div>
                         </div>
                     </div>
@@ -140,17 +123,17 @@
                         </select>
                         <input id="flt_genero_list" name="flt_genero_list" value="" type="hidden">
                     </div>
-                </div>
 
-                <br>
-
-                <div class="row">
                     <div class="col-md-3">
                         <label for="flt_cedula" class="form-label">Cédula</label>
                         <input type="text" class="form-control" id="flt_cedula" name="flt_cedula"
                             placeholder="Ingrese su cédula">
                     </div>
+                </div>
 
+                <br>
+
+                <div class="row">
                     <div class="col-md-3">
                         <label for="flt_nombre_1" class="form-label">Primer nombre</label>
                         <input type="text" class="form-control" id="flt_nombre_1" name="flt_nombre_1"
@@ -426,7 +409,7 @@
 
         // Envía el formulario
         $.ajax({
-            url: '/servicios/registro-deportes/',
+            url: '/servicios/registro-infocentro/',
             type: 'POST',
             data: $('#myForm').serialize(),
             success: function (response) {
