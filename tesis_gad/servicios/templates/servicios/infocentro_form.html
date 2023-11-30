@@ -31,6 +31,14 @@
         font-family: Montserrat, Arial, Helvetica, sans-serif;
     }
 
+    h1 {
+        font-size: 4.5em;
+        color: white;
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+    }
+
     .container {
         padding: 20px;
         width: 69rem;
@@ -63,16 +71,16 @@
     </div>
 </div>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="padding: 0.31rem;">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="padding-left: 0.31rem;">
                 <li class="nav-item">
                     <a href="/servicios/index/">
                         <img src="/static/img/Logo-Alcaldia-2023.png" alt="" style="height: 4rem">
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="padding-left: 0.3rem;">
                     <img src="/static/img/servicios.png" alt="" style="height: 4rem">
                 </li>
             </ul>
@@ -81,7 +89,13 @@
 </nav>
 
 <div class="principal">
-    <br><br><br>
+    <br>
+    <div class="row">
+        <div class="col-sm-12" style="text-align: center;">
+            <h1>Infocentro</h1>
+        </div>
+    </div>
+    <br>
     <div class="container">
         <div class="container-fluid">
             <form id="myForm" method="POST" action="{% url 'registrar_deportes' %}">
@@ -108,8 +122,8 @@
                         <label for="flt_curso" class="form-label">Curso:</label>
                         <select class="form-select" id="flt_curso" name="flt_curso">
                             <option selected>Elija un curso</option>
-                            <option value="futbol">Fútbol</option>
-                            <option value="basquet">Básquet</option>
+                            <!-- <option value="futbol">Fútbol</option>
+                            <option value="basquet">Básquet</option> -->
                         </select>
                         <input id="flt_curso_list" name="flt_curso_list" value="" type="hidden">
                     </div>
@@ -157,7 +171,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="flt_canton" class="form-label">Cantón</label>
+                        <label for="flt_canton" class="form-label">Cantón de residencia</label>
                         <select class="form-select" id="flt_canton">
                             <option selected>Selecciona un cantón o ciudad</option>
                         </select>
@@ -184,7 +198,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="flt_nombre_representante" class="form-label">Nombre del Representante</label>
+                        <label for="flt_nombre_representante" class="form-label">Nombre del representante</label>
                         <input type="text" class="form-control" id="flt_nombre_representante"
                             name="flt_nombre_representante" placeholder="Ingrese nombre completo del representante">
                     </div>
@@ -263,6 +277,7 @@
     // Función que me da los cantones y ciudades al select
     // Obtén el elemento select
     const selectCantones = document.getElementById('flt_canton');
+    const selectCursos = document.getElementById('flt_curso');
     const data = JSON.parse('{{ data|escapejs }}');
 
     function capitalizeFirstLetter(str) {
@@ -270,6 +285,15 @@
             return match.toUpperCase();
         });
     }
+
+    console.log(data);
+
+    data.forEach(objeto => {
+        const option = document.createElement('option');
+        option.value = objeto.name;
+        option.text = objeto.name;
+        selectCursos.appendChild(option);
+    })
 
     // Carga los datos desde el archivo JSON
     fetch('/static/plugins/admin/json/provincias.json')
@@ -292,8 +316,7 @@
     document.getElementById('revisarDatosBtn').addEventListener('click', function () {
         // Recopila los valores de los campos del formulario
         var zonaEleccion = capitalizeFirstLetter(document.querySelector('input[name="zona_eleccion"]:checked').value);
-        var horario = capitalizeFirstLetter(document.querySelector('input[name="horario"]:checked').value);
-        var curso = capitalizeFirstLetter(document.getElementById('flt_curso').value);
+        var curso = document.getElementById('flt_curso').value;
         var genero = capitalizeFirstLetter(document.getElementById('flt_genero').value);
         var nombre1 = capitalizeFirstLetter(document.getElementById('flt_nombre_1').value);
         var nombre2 = capitalizeFirstLetter(document.getElementById('flt_nombre_2').value);
@@ -303,7 +326,6 @@
         var fechaNacimientoStr = document.getElementById('datetimepicker1Input').value;
         var nombreRepresentante = capitalizeFirstLetter(document.getElementById('flt_nombre_representante').value);
         var telefono = document.getElementById('flt_telefono').value;
-        var nameToSearch = '';
 
         var dias = ''
 
@@ -314,7 +336,9 @@
                 (new Date().getMonth() === fechaNacimiento.getMonth() &&
                     new Date().getDate() < fechaNacimiento.getDate()));
 
-        data.data.forEach(objeto => {
+        console.log(curso);
+
+        data.forEach(objeto => {
             // Hacer algo con 'objeto'
             const spaces = objeto.spaces;
             const startDate = objeto.startDate;
@@ -322,43 +346,7 @@
             const ageMin = objeto.rangeAge.min;
             const ageMax = objeto.rangeAge.max;
 
-            var startTime = ''
-            var endTime = ''
-            var day = ''
-
             const schedules = objeto.schedules || [];
-
-            if (horario == 'Matutino') {
-                hora_min = "8:00";
-                hora_max = "12:00";
-
-                // Obtener datos de los horarios
-                schedules.forEach(schedule => {
-                    startTime = schedule.startTime;
-                    endTime = schedule.endTime;
-                    day = schedule.day;
-                    // console.log(`Horario (${day}): Inicio - ${new Date(startTime)}, Fin - ${new Date(endTime)}`);
-                });
-
-                const fechaInicio = new Date(startTime);
-
-                const formatoHora = date => `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-                const horaFormateada = formatoHora(fechaInicio);
-
-                const estaEnRango = parseInt(horaFormateada.substr(0, 2), 10) >= parseInt(hora_min.substr(0, 2), 10) &&
-                    parseInt(horaFormateada.substr(0, 2), 10) <= parseInt(hora_max.substr(0, 2), 10);
-
-                if (estaEnRango) {
-                    if (edad >= Number(ageMin) && edad <= Number(ageMax)) {
-                        nameToSearch = "Futbol " + String(ageMin) + "-" + String(ageMax);
-                    } else if (edad >= Number(ageMin) && edad <= Number(ageMax)) {
-                        nameToSearch = "Futbol " + String(ageMin) + "-" + String(ageMax);
-                    }
-                }
-            } else {
-                hora_min = "13:00";
-                hora_max = "19:00";
-            }
 
             // Obtener el nombre del profesor
             const teacherFullName = objeto._teacher.fullName;
@@ -366,8 +354,11 @@
 
             course_name = objeto.name
 
+            console.log(course_name.trim());
+            console.log(curso.trim());
+
             // Obtener datos según el nombre
-            if (course_name.trim() === nameToSearch.trim()) {
+            if (course_name.trim() === curso.trim()) {
                 schedules.forEach((schedule, index) => {
                     day = schedule.day;
                     dias += capitalizeFirstLetter(day);
@@ -378,7 +369,7 @@
                     }
                 });
 
-                console.log(`Datos para ${nameToSearch}:`);
+                console.log(`Datos para ${course_name}:`);
                 console.log("Espacios:", spaces);
                 console.log("Fecha de inicio:", new Date(startDate));
                 console.log("Fecha de fin:", new Date(endDate));
