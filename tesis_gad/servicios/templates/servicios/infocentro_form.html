@@ -218,14 +218,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button id="revisarDatosBtn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#confirmacionModal">
+                            <button id="revisarDatosBtn" type="button" class="btn btn-primary"
+                                onclick="if (validarCampos()) $('#confirmacionModal').modal('show');">
                                 Revisar Datos
                             </button>
-                            <!-- <button type="submit" class="btn btn-primary">
-                                <img src="/static/plugins/icons8/icons8-enviar-48.png" alt="Bootstrap" width="20"
-                                    height="20">
-                                Enviar </button> -->
                         </div>
                     </div>
                 </div>
@@ -312,6 +308,31 @@
             }
         })
         .catch(error => console.error('Error al cargar los datos: ' + error));
+
+    function validarCampos() {
+        var zonaEleccion = document.querySelector('input[name="zona_eleccion"]:checked');
+        var curso = document.getElementById('flt_curso').value;
+        var genero = document.getElementById('flt_genero').value;
+        var nombre1 = document.getElementById('flt_nombre_1').value;
+        var nombre2 = document.getElementById('flt_nombre_2').value;
+        var apellidos = document.getElementById('flt_apellidos').value;
+        var cedula = document.getElementById('flt_cedula').value;
+        var canton = document.getElementById('flt_canton').value;
+        var fechaNacimiento = document.getElementById('fecha').value;
+        var representante = document.getElementById('flt_nombre_representante').value;
+        var telefono = document.getElementById('flt_telefono').value;
+
+        // Agrega más campos según sea necesario
+
+        if (!zonaEleccion || !curso || !genero || !nombre1 || !nombre2 || !apellidos || !cedula || !canton || !fechaNacimiento || !representante || !telefono) {
+            alert('Por favor, complete todos los campos obligatorios.');
+            return false;
+        }
+
+        // Agrega más validaciones según sea necesario
+
+        return true;
+    }
 
     document.getElementById('revisarDatosBtn').addEventListener('click', function () {
         // Recopila los valores de los campos del formulario
@@ -415,9 +436,9 @@
                     alert('¡Registro no exitoso!');
                 }
             },
-            error: function (error) {
+            error: function (response) {
                 // Maneja errores si es necesario
-                alert('¡Registro no exitoso!', error);
+                alert(response.responseJSON.message);
             }
         });
     }
