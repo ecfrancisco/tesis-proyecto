@@ -92,7 +92,7 @@
     <br>
     <div class="row">
         <div class="col-sm-12" style="text-align: center;">
-            <h1>Deportes</h1>
+            <h1>Infocentro</h1>
         </div>
     </div>
     <br>
@@ -102,8 +102,8 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-3">
-                        <label for="zona_eleccion" class="form-label" title="Zona donde tomará el curso">Zona de su
-                            elección*</label>
+                        <label for="zona_eleccion" class="form-label" title="Zona donde tomará el curso">Zona de
+                            residencia:</label>
                         <div class="input-group" style="padding-top: 0.4rem;">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="zona_eleccion" id="zona_urbana"
@@ -119,40 +119,29 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label for="horario_label" class="form-label">Franja
-                            horaria*</label>
-                        <div class="input-group" style="padding-top: 0.4rem;">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="horario" id="matutino"
-                                    value="matutino" checked>
-                                <label class="form-check-label" for="matutino">Matutino</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="horario" id="vespertino"
-                                    value="vespertino">
-                                <label class="form-check-label" for="vespertino">Vespertino</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="flt_curso" class="form-label">Curso*</label>
+                        <label for="flt_curso" class="form-label">Curso:</label>
                         <select class="form-select" id="flt_curso" name="flt_curso">
-                            <option value="" selected>Elija un curso</option>
-                            <option value="futbol">Fútbol</option>
-                            <!-- <option value="basquet">Básquet</option> -->
+                            <option selected>Elija un curso</option>
+                            <!-- <option value="futbol">Fútbol</option>
+                            <option value="basquet">Básquet</option> -->
                         </select>
-                        <input id="flt_curso_list" name="flt_curso_list" value="" type="hidden" required>
+                        <input id="flt_curso_list" name="flt_curso_list" value="" type="hidden">
                     </div>
 
                     <div class="col-md-3">
-                        <label for="flt_genero" class="form-label">Género*</label>
+                        <label for="flt_genero" class="form-label">Género:</label>
                         <select class="form-select" id="flt_genero" name="flt_genero">
-                            <option value="" selected>Elija un género</option>
+                            <option selected>Elija un género</option>
                             <option value="masculino">Masculino</option>
                             <option value="femenino">Femenino</option>
                         </select>
-                        <input id="flt_genero_list" name="flt_genero_list" value="" type="hidden" required>
+                        <input id="flt_genero_list" name="flt_genero_list" value="" type="hidden">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="flt_cedula" class="form-label">Cédula</label>
+                        <input type="text" class="form-control" id="flt_cedula" name="flt_cedula"
+                            placeholder="Ingrese su cédula">
                     </div>
                 </div>
 
@@ -160,27 +149,21 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <label for="flt_cedula" class="form-label">Cédula*</label>
-                        <input type="text" class="form-control" id="flt_cedula" name="flt_cedula"
-                            placeholder="Ingrese su cédula" required>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="flt_nombre_1" class="form-label">Primer nombre*</label>
+                        <label for="flt_nombre_1" class="form-label">Primer nombre</label>
                         <input type="text" class="form-control" id="flt_nombre_1" name="flt_nombre_1"
-                            placeholder="Ingrese primer nombre" required>
+                            placeholder="Ingrese primer nombre">
                     </div>
 
                     <div class="col-md-3">
-                        <label for="flt_nombre_2" class="form-label">Segundo nombre*</label>
+                        <label for="flt_nombre_2" class="form-label">Segundo nombre</label>
                         <input type="text" class="form-control" id="flt_nombre_2" name="flt_nombre_2"
-                            placeholder="Ingrese segundo nombre" required>
+                            placeholder="Ingrese segundo nombre">
                     </div>
 
                     <div class="col-md-3">
-                        <label for="flt_apellidos" class="form-label">Apellidos*</label>
+                        <label for="flt_apellidos" class="form-label">Apellidos</label>
                         <input type="text" class="form-control" id="flt_apellidos" name="flt_apellidos"
-                            placeholder="Ingrese sus dos apellidos" required>
+                            placeholder="Ingrese sus dos apellidos">
                     </div>
                 </div>
 
@@ -188,16 +171,16 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="flt_canton" class="form-label">Cantón de residencia*</label>
+                        <label for="flt_canton" class="form-label">Cantón de residencia</label>
                         <select class="form-select" id="flt_canton">
-                            <option value="" selected>Selecciona un cantón o ciudad</option>
+                            <option selected>Selecciona un cantón o ciudad</option>
                         </select>
-                        <input id="flt_canton_list" name="flt_canton_list" value="" type="hidden" required>
+                        <input id="flt_canton_list" name="flt_canton_list" value="" type="hidden">
                     </div>
 
                     <div class="col-md-4">
                         <label for="datetimepicker1Input" class="form-label" style="font-weight: 500;">Fecha de
-                            nacimiento*
+                            nacimiento
                         </label>
                         <div class="input-group" id="datetimepicker1" data-td-target-input="nearest"
                             data-td-target-toggle="nearest" style="width: 19rem;">
@@ -215,18 +198,17 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="flt_nombre_representante" class="form-label">Nombre del representante*</label>
+                        <label for="flt_nombre_representante" class="form-label">Nombre del representante</label>
                         <input type="text" class="form-control" id="flt_nombre_representante"
-                            name="flt_nombre_representante" placeholder="Ingrese nombre completo del representante"
-                            required>
+                            name="flt_nombre_representante" placeholder="Ingrese nombre completo del representante">
                     </div>
 
                     <div class="col-md-3">
-                        <label for="flt_telefono" class="form-label">Celular*</label>
+                        <label for="flt_telefono" class="form-label">Celular</label>
                         <div class="input-group">
                             <span class="input-group-text">+593</span>
                             <input type="text" id="flt_telefono" name="flt_telefono" class="form-control"
-                                placeholder="9xx-xxxxxx" required>
+                                placeholder="9xx-xxxxxx">
                         </div>
                     </div>
                 </div>
@@ -291,15 +273,23 @@
     // Función que me da los cantones y ciudades al select
     // Obtén el elemento select
     const selectCantones = document.getElementById('flt_canton');
+    const selectCursos = document.getElementById('flt_curso');
     const data = JSON.parse('{{ data|escapejs }}');
-
-    console.log(data);
 
     function capitalizeFirstLetter(str) {
         return str.replace(/(?:^|\s)\S/g, function (match) {
             return match.toUpperCase();
         });
     }
+
+    console.log(data);
+
+    data.forEach(objeto => {
+        const option = document.createElement('option');
+        option.value = objeto.name;
+        option.text = objeto.name;
+        selectCursos.appendChild(option);
+    })
 
     // Carga los datos desde el archivo JSON
     fetch('/static/plugins/admin/json/provincias.json')
@@ -321,7 +311,6 @@
 
     function validarCampos() {
         var zonaEleccion = document.querySelector('input[name="zona_eleccion"]:checked');
-        var horario = document.querySelector('input[name="horario"]:checked');
         var curso = document.getElementById('flt_curso').value;
         var genero = document.getElementById('flt_genero').value;
         var nombre1 = document.getElementById('flt_nombre_1').value;
@@ -335,7 +324,7 @@
 
         // Agrega más campos según sea necesario
 
-        if (!zonaEleccion || !horario || !curso || !genero || !nombre1 || !nombre2 || !apellidos || !cedula || !canton || !fechaNacimiento || !representante || !telefono) {
+        if (!zonaEleccion || !curso || !genero || !nombre1 || !nombre2 || !apellidos || !cedula || !canton || !fechaNacimiento || !representante || !telefono) {
             alert('Por favor, complete todos los campos obligatorios.');
             return false;
         }
@@ -348,8 +337,7 @@
     document.getElementById('revisarDatosBtn').addEventListener('click', function () {
         // Recopila los valores de los campos del formulario
         var zonaEleccion = capitalizeFirstLetter(document.querySelector('input[name="zona_eleccion"]:checked').value);
-        var horario = capitalizeFirstLetter(document.querySelector('input[name="horario"]:checked').value);
-        var curso = capitalizeFirstLetter(document.getElementById('flt_curso').value);
+        var curso = document.getElementById('flt_curso').value;
         var genero = capitalizeFirstLetter(document.getElementById('flt_genero').value);
         var nombre1 = capitalizeFirstLetter(document.getElementById('flt_nombre_1').value);
         var nombre2 = capitalizeFirstLetter(document.getElementById('flt_nombre_2').value);
@@ -359,7 +347,6 @@
         var fechaNacimientoStr = document.getElementById('datetimepicker1Input').value;
         var nombreRepresentante = capitalizeFirstLetter(document.getElementById('flt_nombre_representante').value);
         var telefono = document.getElementById('flt_telefono').value;
-        var nameToSearch = '';
 
         var dias = ''
 
@@ -370,6 +357,8 @@
                 (new Date().getMonth() === fechaNacimiento.getMonth() &&
                     new Date().getDate() < fechaNacimiento.getDate()));
 
+        console.log(curso);
+
         data.forEach(objeto => {
             // Hacer algo con 'objeto'
             const spaces = objeto.spaces;
@@ -378,43 +367,7 @@
             const ageMin = objeto.rangeAge.min;
             const ageMax = objeto.rangeAge.max;
 
-            var startTime = ''
-            var endTime = ''
-            var day = ''
-
             const schedules = objeto.schedules || [];
-
-            if (horario == 'Matutino') {
-                hora_min = "8:00";
-                hora_max = "12:00";
-
-                // Obtener datos de los horarios
-                schedules.forEach(schedule => {
-                    startTime = schedule.startTime;
-                    endTime = schedule.endTime;
-                    day = schedule.day;
-                    // console.log(`Horario (${day}): Inicio - ${new Date(startTime)}, Fin - ${new Date(endTime)}`);
-                });
-
-                const fechaInicio = new Date(startTime);
-
-                const formatoHora = date => `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-                const horaFormateada = formatoHora(fechaInicio);
-
-                const estaEnRango = parseInt(horaFormateada.substr(0, 2), 10) >= parseInt(hora_min.substr(0, 2), 10) &&
-                    parseInt(horaFormateada.substr(0, 2), 10) <= parseInt(hora_max.substr(0, 2), 10);
-
-                if (estaEnRango) {
-                    if (edad >= Number(ageMin) && edad <= Number(ageMax)) {
-                        nameToSearch = "Futbol " + String(ageMin) + "-" + String(ageMax);
-                    } else if (edad >= Number(ageMin) && edad <= Number(ageMax)) {
-                        nameToSearch = "Futbol " + String(ageMin) + "-" + String(ageMax);
-                    }
-                }
-            } else {
-                hora_min = "13:00";
-                hora_max = "19:00";
-            }
 
             // Obtener el nombre del profesor
             const teacherFullName = objeto._teacher.fullName;
@@ -422,8 +375,11 @@
 
             course_name = objeto.name
 
+            console.log(course_name.trim());
+            console.log(curso.trim());
+
             // Obtener datos según el nombre
-            if (course_name.trim() === nameToSearch.trim()) {
+            if (course_name.trim() === curso.trim()) {
                 schedules.forEach((schedule, index) => {
                     day = schedule.day;
                     dias += capitalizeFirstLetter(day);
@@ -434,11 +390,11 @@
                     }
                 });
 
-                // console.log(`Datos para ${nameToSearch}:`);
-                // console.log("Espacios:", spaces);
-                // console.log("Fecha de inicio:", new Date(startDate));
-                // console.log("Fecha de fin:", new Date(endDate));
-                // console.log(`ID: ${idCourse}`);
+                console.log(`Datos para ${course_name}:`);
+                console.log("Espacios:", spaces);
+                console.log("Fecha de inicio:", new Date(startDate));
+                console.log("Fecha de fin:", new Date(endDate));
+                console.log(`ID: ${idCourse}`);
 
                 $('#id_course').val(idCourse);
             }
@@ -465,7 +421,7 @@
 
         // Envía el formulario
         $.ajax({
-            url: '/servicios/registro-deportes/',
+            url: '/servicios/registro-infocentro/',
             type: 'POST',
             data: $('#myForm').serialize(),
             success: function (response) {
