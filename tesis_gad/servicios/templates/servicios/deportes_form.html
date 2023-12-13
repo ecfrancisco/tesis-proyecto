@@ -76,7 +76,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="padding-left: 0.31rem;">
                 <li class="nav-item">
-                    <a href="/servicios/index/">
+                    <a href="/">
                         <img src="/static/img/Logo-Alcaldia-2023.png" alt="" style="height: 4rem">
                     </a>
                 </li>
@@ -465,7 +465,7 @@
 
         // Envía el formulario
         $.ajax({
-            url: '/servicios/registro-deportes/',
+            url: '/registro-deportes/',
             type: 'POST',
             data: $('#myForm').serialize(),
             success: function (response) {
@@ -474,7 +474,7 @@
                     alert('¡Registro exitoso!');
 
                     // Redirige a la URL proporcionada en la respuesta después de aceptar la alerta
-                    window.location.href = response.redirect_url || '/servicios/index/';
+                    window.location.href = response.redirect_url || '/';
                 } else {
                     // Maneja otros casos de respuesta del servidor, si es necesario
                     alert('¡Registro no exitoso!');

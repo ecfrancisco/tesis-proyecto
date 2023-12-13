@@ -112,7 +112,7 @@ def registrar_deportes(request):
             # Devolver un mensaje exitoso
             return HttpResponse(
                 content=json.dumps(
-                    {'status': 'success', 'redirect_url': '/servicios/index/'}),
+                    {'status': 'success', 'redirect_url': '/'}),
                 content_type='application/json'
             )
         except requests.exceptions.RequestException as e:
@@ -177,7 +177,7 @@ def registrar_infocentro(request):
             # Devolver un mensaje exitoso
             return HttpResponse(
                 content=json.dumps(
-                    {'status': 'success', 'redirect_url': '/servicios/index/'}),
+                    {'status': 'success', 'redirect_url': '/'}),
                 content_type='application/json'
             )
         except requests.exceptions.RequestException as e:
@@ -242,7 +242,7 @@ def registrar_salud(request):
             # Devolver un mensaje exitoso
             return HttpResponse(
                 content=json.dumps(
-                    {'status': 'success', 'redirect_url': '/servicios/index/'}),
+                    {'status': 'success', 'redirect_url': '/'}),
                 content_type='application/json'
             )
         except requests.exceptions.RequestException as e:
